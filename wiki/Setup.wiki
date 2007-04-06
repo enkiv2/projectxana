@@ -27,7 +27,9 @@
 4) If you want to just try out the build image, go to the next section. If you want to be able to modify anything, go on to the next step in this section.
 
 5) Build the kernel. This is done by:
+
   ./clean.sh
+
   ./compile.sh
 
 
