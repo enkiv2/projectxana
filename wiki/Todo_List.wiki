@@ -1,5 +1,5 @@
 #summary Todo list for Project XANA
-#labels Phase-Requirements,Phase-Design
+#labels Phase-Requirements,Phase-Design,Featured
 
 = 0.01 =
   * GDT (OK)
