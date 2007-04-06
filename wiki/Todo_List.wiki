@@ -1,0 +1,29 @@
+#summary Todo list for Project XANA
+#labels Phase-Requirements,Phase-Design
+
+= 0.01 =
+  * GDT (OK)
+  * IDT (Untested)
+  * Keyboard support (Untested)
+  * VGA text support (OK)
+  * Memory manager/garbage collection (OK)
+  * VGA graphics/ Mode 13/Mode X support (0%)
+  * ENFS basic support (Untested)
+  * Z2 text mode UI (0%)
+  * Z2 VGA UI (0%)
+
+= 0.02 =
+  * Zig VGA UI (0%)
+  * Cell / EPL interpreter (5%)
+  * Multithreading (0%)
+  * Joystick (0%)
+  * Userland drivers (Untested)
+  * Z2 task/context switch (0%)
+  * EPL coding for Z2 (0%)
+  * EPL standard lib (0%)
+
+= 0.03 =
+I hope we get this far...
+
+= Eventual (far future) =
+  * Restructure everything so it's usable
