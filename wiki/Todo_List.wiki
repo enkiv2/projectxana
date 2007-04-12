@@ -8,7 +8,7 @@
   * VGA text support (OK)
   * VGA text mode colours (OK)
   * Memory manager/garbage collection (OK)
-  * VGA graphics/ Mode 13/Mode X support (0%)
+  * VGA graphics/ Mode 13/Mode X support (10%)
   * ENFS basic support (Untested)
   * Z2 text mode UI / Display (0%)
   * Z2 text mode UI / Editing (0%)
