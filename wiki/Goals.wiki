@@ -1,5 +1,5 @@
 #summary Goals and objectives of Project XANA
-#labels Phase-Requirements,Phase-Design,Phase-Implementation,Featured,Deprecated
+#labels Phase-Requirements,Phase-Design,Phase-Implementation,Featured,Phase-Support
 
 = Goals and Objectives =
 
