@@ -129,15 +129,15 @@ char[] SCAN_SET_1_SHIFT = [
 char[int] ALPHABET = {
 	1: "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "[", "\\", "]", "^"}
 +/
-char scan2char(ushort scan) {
+char scan2char(ushort scan) {/+
 	if (((scan & 42) == 42) || ((scan & 54) == 54)) {
 		if (!(scan>>8 >= SCAN_SET_1.length+2)) { return '\0'; }
 		return SCAN_SET_1[scan>>8];
-	}
+	}+/
 	if (((scan & 42<<8) == 42<<8) || ((scan & 54<<8) == 54<<8)){
-		if (!(scan&0x00ff >= SCAN_SET_1.length+2)) { return '\0'; }
-		return SCAN_SET_1[scan&0x00ff];
-	}
+		if ((scan&0x00ff) < (SCAN_SET_1.length+2)) { return '\0'; }
+		return SCAN_SET_1_SHIFT[scan&0x00ff];
+	}/+
 	if ((scan & 29) == 29) {
 		if (!(scan>>8 >= SCAN_SET_1.length+2)) { return '\0'; }
 		int x=(cast(int)SCAN_SET_1[scan>>8])-96;
@@ -145,23 +145,23 @@ char scan2char(ushort scan) {
 			return '\0';
 		}
 		return cast(char) x;
-	}
+	}+/
 	if ((scan & 29<<8) == 29<<8) {
-		if (!(scan&0x00ff >= SCAN_SET_1.length)) { return '\0'; }
+		if ((scan&0x00ff) > (SCAN_SET_1.length+2)) { return '\0'; }
 		int x=(cast(int)SCAN_SET_1[scan&0x00ff])-96;
 		if (x<0) {
 			return '\0';
 		}
 		return cast(char) x;
 	}
-	if (!(scan & 0x00ff > SCAN_SET_1.length)) { return '\0'; }
-	return SCAN_SET_1_SHIFT[scan & 0x00ff];
+	if ((scan & 0x00ff) > (SCAN_SET_1.length+2)) { return '\0'; }
+	return SCAN_SET_1[scan & 0x00ff];
 }
 
 char read_KB() {
 	ubyte status=inByte(0x64);
 	if (status & 0x01) {
-		int scan=inWord(0x60);
+		int scan=inByte(0x60);
 		return scan2char(scan);
 	}
 	return '\0';
