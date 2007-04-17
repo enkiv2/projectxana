@@ -110,6 +110,7 @@ struct Term {
 			this.newLine();
 		} else if (c=='\t') {
 			this.cursor.x+=8;
+		} else if (c=='\0') {
 		} else {
 //			kernel_assert_print(&c, 1, cast(int)(index++));
 			this.buffer[index++] = Character (c, attribute);
