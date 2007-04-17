@@ -4,7 +4,7 @@
 = 0.01 =
   * GDT (OK)
   * IDT (OK)
-  * Keyboard support (90%)
+  * Keyboard support (99%)
   * VGA text support (OK)
   * VGA text mode colours (OK)
   * Memory manager/garbage collection (OK)
