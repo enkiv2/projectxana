@@ -1,0 +1,13 @@
+pic.d
+
+This module provides an interface with the Programmable Interrupt Controller.
+
+Provides:
+
+public enum IRQs	IRQ codes 0-15 (IRQn format)
+public void remap(uint start)	remaps the IRQs at start
+public void EOI()	notes that the ISR has finished 
+public void disableAll()	stops all interrupts
+public void enable (uint n)	enables IRQ n
+public void disable(uint n)	disables IRQ n
+

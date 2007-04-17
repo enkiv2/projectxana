@@ -1,0 +1,6 @@
+libc.c
+
+Provides basic c library functions (specifically the ones needed by Lua). 
+Created by LHF.
+
+

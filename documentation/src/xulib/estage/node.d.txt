@@ -1,0 +1,30 @@
+node.d
+
+Provides XuNode
+
+Provides:
+
+struct XuNode(T)			Xanalogical Unit Node class.
+					An enfilade database on the data 
+					structure T
+- uint size
+- T db
+- uint64_t[Enfilade][] loc		Length of Contents
+- uint64_t[4][Enfilade] toc		Table of Contents
+- uint64_t e0, e1, e2, e3		End locations of sections 0-3
+					of loc/toc
+						Section	Type
+						0	XuLink
+						1	XuClude
+						2	Doc
+						3	XuTitle
++ void init(T db)			
++ void init()				Formats an XuNode
++ void recalcToc()			Recalculates the toc
++ XuDoc get(Enfilade e)			Gets the document located at the 
+					provided enfilade. Returns XuDoc with 
+					title, links, cludes, and doc
++ XuDoc add(XuDoc doc, Enfilade e)	Sets the doc at enfilade e to doc, 
+					then returns doc
++ void free(Enfilade e)			Sets the doc at e to a blank doc
+

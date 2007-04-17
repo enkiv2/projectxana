@@ -1,0 +1,32 @@
+trans.d
+
+Provides transpointers (links), transclusions (quotes), and enfilade spans 
+(sections).
+
+Provides:
+
+struct XuSpan					An enfilade span
+- Enfilade start
+- Enfilade end
+- uint64_t vstart				Individual character/byte 
+						indices
+- uint64_t vend
++ char[] stringOf()				Returns string of format:
+						<start>c<vstart>-<end>c<vend>
+
+struct XuLink					A transpointer
+- XuSpan back
+- XuSpan forward
+- XuSpan threespan
++ char[] stringOf()				Returns a string of format:
+						P<back>~<forward>~<threespan>
+
+struct XuClude					A transclusion
+- XuSpan back
+- XuSpan threespan
+- Enfilade forward
+- uint64_t vforward
++ char[] stringOf()				Returns a string of format:
+						C<back>~<forward>~c<vforward>~
+						<threespan>
+

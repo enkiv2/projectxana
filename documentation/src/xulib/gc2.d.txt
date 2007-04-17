@@ -1,0 +1,5 @@
+gc2.d
+
+Ripped and hacked from the gdc garbage collector in order to work with gc.d
+
+Too many functions to list, really.

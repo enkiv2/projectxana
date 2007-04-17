@@ -1,0 +1,18 @@
+Enfilades (an introduction)
+
+The enfilade is a type of data structure used as an address. Like a URL, it 
+addresses a document. Like an IP, it consists entirely of numbers.
+
+Its structure is that of the Dewey Decimal System taken to extremes. It is an 
+extension of Project Xanadu's "Tumbler Addressing" (which uses a slightly 
+different definition of "enfilade", and now hardly mentions the word). A tumbler
+is a series of 64-bit unsigned integers, separated by periods. These integers 
+can be anything from 1 to 2^64. For example,
+	1.7.58.79.293.9999.3.1960.555.7090
+A tumbler can contain up to 2^64 of these integers. An enfilade is a series of 
+up to 2^64 tumblers, separated by 0-digits. For example,
+	1.27.0.1.0.2.33.1984.1570.0.2v2
+The vN notation is the version. The tumbler sequence ends in a v, followed by a 
+version number (once again, 64 bit). Versions start with 1, and progress 
+posward. A version of 0 means the newest version.
+

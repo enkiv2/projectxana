@@ -1,0 +1,25 @@
+idt.d
+
+This module does the interrupt code. It provides the following:
+
+private struct Descriptor:	an Interrupt Descriptor Table descriptor
+public struct IDT:		a full IDT
+
+void divByNullException()	default interrupt handlers
+void nmiInterruptException()
+void breakpoitException()
+void overflowException()
+void boundsException()
+void invalidOpcodeException()
+void devNotAvailException()
+void doubleFaultException()
+void coProcSegOverrunException()
+void invalidTSSException()
+void segNotPresentException()
+void stackSegFaultException()
+void generalProtectionFaultException()
+void pageFaultException()
+void fpuErrorException()
+void allignmentCheckException()
+void machineCheckException()
+void simdException()

@@ -1,0 +1,8 @@
+logo.d
+
+Contains the bootup logo, and possibly other random symbols and such.
+
+Provides:
+
+static const char[] LOGO
+

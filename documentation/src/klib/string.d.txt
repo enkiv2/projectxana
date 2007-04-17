@@ -1,0 +1,10 @@
+string.d
+
+Provides basic string functions.
+
+Provides:
+
+char[] digits
+int compare (char[] s1, char[] s2)
+char[] toString(uint u)		turns u into a string
+

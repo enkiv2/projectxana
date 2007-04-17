@@ -1,0 +1,8 @@
+gdt.asm
+
+Provides a GDT.
+
+Provides:
+
+public void flushGDT()			Empties the GDT
+

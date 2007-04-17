@@ -1,0 +1,19 @@
+heap.d
+
+Provides XuHeap
+
+Provides:
+
+struct XuHeap
+- uint size
+- Heap heap
+- uint start
++ void allocate(uint size)
++ void* malloc(uint size)
++ void* opIndex(size_t i)
++ void opIndexApply(void* value, void* i)
++ uint[] opSlice(size_t start, size_t end)
++ void opSliceAssign(void* value, size_t start, size_t end)
++ uint[] opIndex()
++ void opSliceAssign(void* value)
+

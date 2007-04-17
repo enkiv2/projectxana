@@ -1,0 +1,7 @@
+kernel_assert.d
+
+This module provides a kernel-save assert() function
+
+Provides:
+
+void kernel_assert(int expr, char* file, char* line)

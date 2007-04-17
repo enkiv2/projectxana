@@ -1,0 +1,23 @@
+string.d
+
+Standard (almost) string functions.
+
+Provides:
+
+int strcmp(char[] s, char[] s2)
+alias strcmp cmp
+char[] toString(int i)
+char[] toString(uint i)
+char[] toString(long l)
+char[] toString(ulong l)
+char[] toString(Object o)
+char[] toString(double d)
+int find(char[] s, char c)
+int find(char[] s, char[] s2)
+char[][] split(char[] s, char[] delim)
+char[][] split(char[] s, char delim)
+char[] replace(char[] s, char[] orig, 		Replaces instances of orig in 
+	char[] rep, int iter=0)			s with rep, up to iter times
+						(or, if iter is 0, replace 
+						all matches)
+
