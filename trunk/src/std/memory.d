@@ -5,6 +5,8 @@
  +/
 module std.memory;
 
+public import Memory;
+
 private import gc;
 //private import node;
 /+private import Memory;
@@ -20,14 +22,14 @@ void memset (void* b, int m, uint l) {
 	memcpy(b, &m, l);
 }
 +/
-public import memset;
+//public import memset;
 void* calloc(int x) {
 	return gc.gc.malloc(cast(uint)x);
 }
 //alias gc.mem.db.allocate calloc;
 alias calloc alloca;
-int _d_OutOfMemory() {
+/+int _d_OutOfMemory() {
 	return 0;
-}
+}+/
 alias gc.free free;
 

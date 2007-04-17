@@ -42,7 +42,8 @@ import gcstub;
 import object;
 
 import std.c.stdarg;
-import internal.memset;
+//import internal.memset;
+import std.memory;
 import std.outofmemory;
 //debug = PRINTF;
 /+
@@ -242,7 +243,7 @@ extern (C) Array _d_newarrayT(TypeInfo ti, size_t length)
 	result.data = cast(byte*) _gc.malloc(size + 1);
 	if (!(ti.next.flags() & 1))
 	    _gc.hasNoPointers(result.data);
-	memset(result.data, 0, size);
+	memset(cast(void*)result.data, cast(ubyte)0, size);
     }
     return result;
 }

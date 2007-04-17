@@ -42,6 +42,10 @@ struct Heap {
 
 Heap heap;
 
+extern (C) void memmove( void * src, void * dst, uint size) {
+	memcpy (src, dst, size);
+}
+
 extern (C) void memcpy ( void * src, void * dst, uint size ) {
     uint * plDst = cast(uint *) dst;
     uint * plSrc = cast(uint *) src;
@@ -63,13 +67,27 @@ extern (C) void memcpy ( void * src, void * dst, uint size ) {
     return dst;
 }
 
-alias memcpy memmove;
+
 
 public void copy( void * src, void * dest, uint length ) {
 	memcpy( src, dest, length );
 }
 
 extern(C) void _d_array_bounds ( ) { }
+
+void memset (void* dest, ubyte src, uint times) {
+	uint i=0;
+	while (times--) {
+		*(cast(ubyte*)(dest+(i++)))=src;
+	}
+}
+
+extern (C) void memset (void* dest, uint src, uint times) {
+	uint i=0;
+	while (times--) {
+		*(cast(uint*)(dest+(i++)))=src;
+	}
+}
 
 
 /+
@@ -107,6 +125,8 @@ void copy ( T ) ( in T * source, in T * destination, in uint length ) {
 }
 +/
 
+//alias compare!(void*) memcmp;
+
 uint compare ( T ) ( in T m1, in T m2, in uint length ) {
 	while ( *m1++ == *m2++ ) {
 		if ( length < T.sizeof ) {
@@ -125,3 +145,11 @@ uint compare ( T ) ( in T m1, in T m2, in uint length ) {
 
 	return length;
 }
+
+extern (C) uint memcmp (void* m1, void* m2, uint length) {
+	while (*(cast(ubyte*)(m1++)) == *(cast(ubyte*)(m2++))) {
+		length--;
+	}
+	return length;
+}
+
