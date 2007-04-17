@@ -62,7 +62,7 @@ struct RLEBitmap {
 			for (int j=0; j<data[i].length; j++) {
 				if (data[i][j]) {
 					if (curr) {
-						memset.memset(cast(void*)((VIDEO_BUFFER+(((i+x)*HEIGHT)+(i2+y)))), cast(int)color, data[i][j]);
+						memset((cast(void*)((VIDEO_BUFFER+(((i+x)*HEIGHT)+(i2+y))))), color, data[i][j]);
 					}
 					i2+=data[i][j];
 				}
@@ -94,7 +94,7 @@ struct RLEPixmap {
 		for (int i=0; i<data.length; i++) {
 			int i2=0;
 			for (int j=0; j<data[i].length; j++) {
-				memset.memset(cast(void*)((VIDEO_BUFFER+(((i+x)*HEIGHT)+(i2+y)))), cast(int)data[i][j].color, data[i][j].length);
+				memset((cast(void*)((VIDEO_BUFFER+(((i+x)*HEIGHT)+(i2+y))))), data[i][j].color, data[i][j].length);
 				i2+=data[i][j].length;
 			}
 		}

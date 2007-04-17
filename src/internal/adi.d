@@ -49,7 +49,7 @@ alias bool bit;
 import std.string;
 import std.stdio;
 import std.c.stdio;
-import memset;
+//import memset;
 import std.memory;
 
 struct Array

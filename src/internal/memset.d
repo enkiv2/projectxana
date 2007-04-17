@@ -1,3 +1,4 @@
+/+
 /*
  *  Copyright (C) 2004 by Digital Mars, www.digitalmars.com
  *  Written by Walter Bright
@@ -127,3 +128,4 @@ void *_memsetn(void *p, void *value, int count, int sizelem)
     }
     return pstart;
 }
++/

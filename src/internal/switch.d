@@ -25,7 +25,8 @@
 import std.c.stdio;
 //import std.c.string;
 import std.string;
-import memset;
+//import memset;
+import std.memory;
 
 /******************************************************
  * Support for switch statements switching on strings.
