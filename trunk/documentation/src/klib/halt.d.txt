@@ -1,0 +1,5 @@
+halt.d
+
+Provides:
+
+void kernel_halt()			Halts the kernel

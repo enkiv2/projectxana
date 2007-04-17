@@ -1,0 +1,6 @@
+gc.d
+
+Basic enfilade-based memory manager wrapper. May need to rewrite some bits, as 
+this may be recursive.
+
+

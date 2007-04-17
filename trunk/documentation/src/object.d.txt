@@ -1,0 +1,3 @@
+object.d
+
+Provides template for Object and basic TypeInfos

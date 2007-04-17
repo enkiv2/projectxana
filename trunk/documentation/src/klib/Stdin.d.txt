@@ -1,0 +1,18 @@
+Stdin.d
+
+Provides keyboard input functionality.
+
+Provides:
+
+char[] SCAN_SET_1	scan codes (normal)
+char[] SCAN_SET_1_SHIFT	scan codes (shifted)
+char scan2char(ushort scan)	converts a scancode to a char
+char read_KB()		reads the hardware keybuffer and converts the scancode
+char[] KB_BUFFER	keyboard stream buffer
+void KB_handle()	ISR for keyboard interrupts
+char[] KB_read(int l)	reads l chars from the KB_BUFFER, takes them off, and 
+			returns them.
+char KB_read()		reads 1 char from the KB_BUFFER, takes it off, and 
+			returns it
+void init_KB(IDT i)	sets up the keyboard interrupt handler on IRQ 1
+

@@ -1,0 +1,5 @@
+kernel_halt.s
+
+Assembly code for halting kernel.
+
+See halt.d

@@ -1,0 +1,6 @@
+ports.d
+
+This module provides nicer names for Port functions
+
+alias Port.inByte inb
+alias Port.outByte outb

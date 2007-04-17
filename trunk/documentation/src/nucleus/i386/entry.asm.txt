@@ -1,0 +1,10 @@
+entry.asm
+
+Provides the entry code and multiboot header.
+
+Provides:
+
+MultibootHeader				Needed for grub
+public void entry()			Starts the kernel's kmain()
+public void* gdt_pointer		Points to the gdt
+private GDT gdt				The GDT

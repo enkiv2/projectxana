@@ -1,0 +1,9 @@
+abort.d:
+
+This provides the abort module, which has but one method: abort(). This just 
+does an infinite while loop, to stall. I could do this better in ASM, but 
+why bother?
+
+The abort() function is used by internal/unwind.d (the error handling system).
+
+Ugly hack.

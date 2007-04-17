@@ -1,0 +1,5 @@
+kmain.d
+
+Test nucleus. Loads IDT, handles keyboard interrupts, prints "hello world" and 
+halts.
+

@@ -1,0 +1,24 @@
+enfs.d
+
+Provides the ENfiladal File System for hard disk, partition, and ramdisk.
+
+Provides:
+
+struct Enfs
+- XuNode!(void[]) ram				Ram disk
+- XuNode!(MMPart) part				Partition
+- XuNode!(MMDisk) disk				Disk
++ void init(void[] m)				Ram disk initialization
++ void init(MMPart m)				Partition intitialization
++ void init(MMDisk m)				Disk initialization
++ void format()					Formats the FS
++ void setup()					Reads the disk
++ XuDoc get(Enfilade e)				See XuNode
++ XuDoc set(XuDoc doc, Enfilade e)		See XuNode.add()
++ void rm(Enfilade e)				See XuNode.free()
++ XuDoc add(XuDoc doc, Enfilade e)		Same as set(), except it only 
+						creates new documents or new 
+						versions of old documents -- 
+						does not overwrite! 
+						(slow)
+

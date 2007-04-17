@@ -1,0 +1,28 @@
+stdio.d
+
+Provides rough approximations of std.stdio functions.
+
+Provides:
+
+void putc(char c)
+void puts(char[] s)
+void writef(char[] f, ...)			Basically the same as the normal
+						d writef(), except it uses 
+						our std.format.format(). See 
+						format.d.txt for details before 
+						using, please!
+void writefl(char[] f, ...)			Same as writef, except + 
+						a newline
+void writeln(char[] f)				Same as puts() + a newline
+char getc()					Read one char from the keyboard
+						buffer and return it
+char[] read(int l)				Returns l chars from keyboard 
+						buffer
+char[] gets(char delim=' ')			Reads keyboard buffer up to 
+						delim and returns it. If it 
+						encounters ^c or ^d it returns 
+						a blank string
+char[] getln()					Reads keyboard buffer up to a 
+						newline. See gets()
+
+						

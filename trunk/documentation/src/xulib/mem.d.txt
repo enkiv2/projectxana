@@ -1,0 +1,23 @@
+mem.d
+
+Provides the memory manager.
+
+Provides:
+
+struct XuMem					Managed heap
+- XuHeap heap					
+- uint* memtable				Pointer to the memory table
+- uint tablesize				Page size
+- uint index					Table entry index
+- uint memtablesize				Size of the memory table
++ void init(uint size)				Sets memtablesize to size and 
+						allocates memtable, setting 
+						index to 0 (as is our wont)
++ void* malloc(uint size)			Malloc -- calls heap.malloc() 
+						and sets up our pages.
++ void free(void* temp, uint size)		Frees memory up to size and 
+						collects it if it has no 
+						references
++ void addRoot(void* temp)			Adds a reference to temp's 
+						refcount
+
