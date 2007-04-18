@@ -135,8 +135,19 @@ char scan2char(ushort scan) {/+
 		return SCAN_SET_1[scan>>8];
 	}+/
 	if (scan&0x80) {
+		if (KB_KEYMAP & (KB_LSHIFT|KB_RSHIFT)) {
+			KB_KEYMAP=0;
+			return SCAN_SET_1_SHIFT[scan&0x7f];
+		}
 		KB_KEYMAP=0;
-		scan&=0x7f;
+//		scan&=0x7f;
+/+		if (scan==42) {
+			KB_KEYMAP|=KB_LSHIFT;
+		}
+		if (scan==54) {
+			KB_KEYMAP|=KB_RSHIFT;
+		}
++/		return '\0';
 	}
 	if (scan==75) {
 		KB_KEYMAP|=KB_LEFT;
@@ -150,13 +161,13 @@ char scan2char(ushort scan) {/+
 	if (scan==80) {
 		KB_KEYMAP|=KB_DOWN;
 	}
-	if (((scan & 42) == 42)){
+	if ((scan == 42)){
 		KB_KEYMAP|=KB_LSHIFT;
 	}
-	if (((scan & 54) == 54)) {
+	if ((scan == 54)) {
 		KB_KEYMAP|=KB_RSHIFT;
 	}
-	if (KB_KEYMAP&(KB_LSHIFT|KB_RSHIFT)) {
+	if ((KB_KEYMAP&KB_LSHIFT)||(KB_KEYMAP&KB_RSHIFT)) {
 		if ((scan&0x00ff) < (SCAN_SET_1.length+2)) { return '\0'; }
 		return SCAN_SET_1_SHIFT[scan&0x00ff];
 	}/+
