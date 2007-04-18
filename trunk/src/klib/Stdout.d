@@ -7,6 +7,7 @@ module Stdout;
 
 private import Port;
 private import Memory;
+private import Stdin;
 
 extern (C) void kernel_assert_clear();
 extern (C) void kernel_assert_print(char*, int, int);
@@ -101,7 +102,7 @@ struct Term {
 	public void putChar ( char c ) {
 		if ( c == '\n' || c == '\r' ) {
 			this.newLine;
-		}
+		} 
 
 		ubyte attribute = ((this.foreground & 0x0f) | ((this.background << 4) & 0xf0));
 
@@ -111,6 +112,11 @@ struct Term {
 		} else if (c=='\t') {
 			this.cursor.x+=8;
 		} else if (c=='\0') {
+		} else if (c=='\b') {
+			Stdin.KB_BUFFLEN--;
+			this.cursor.x--;
+			putChar(' ');
+			this.cursor.x--;
 		} else {
 //			kernel_assert_print(&c, 1, cast(int)(index++));
 			this.buffer[index++] = Character (c, attribute);
