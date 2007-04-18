@@ -134,7 +134,16 @@ char scan2char(ushort scan) {/+
 		if (!(scan>>8 >= SCAN_SET_1.length+2)) { return '\0'; }
 		return SCAN_SET_1[scan>>8];
 	}+/
-	if (((scan & 42<<8) == 42<<8) || ((scan & 54<<8) == 54<<8)){
+	if (scan&0x80) {
+		KB_KEYMAP=0;
+	}
+	if (((scan & 42) == 42)){
+		KB_KEYMAP|=KB_LSHIFT;
+	}
+	if (((scan & 54) == 54)) {
+		KB_KEYMAP|=KB_RSHIFT;
+	}
+	if (KB_KEYMAP&(KB_LSHIFT|KB_RSHIFT)) {
 		if ((scan&0x00ff) < (SCAN_SET_1.length+2)) { return '\0'; }
 		return SCAN_SET_1_SHIFT[scan&0x00ff];
 	}/+
@@ -146,7 +155,10 @@ char scan2char(ushort scan) {/+
 		}
 		return cast(char) x;
 	}+/
-	if ((scan & 29<<8) == 29<<8) {
+	if ((scan & 29) == 29) {
+		KB_KEYMAP|=KB_CTRL;
+	}
+	if (KB_KEYMAP&KB_CTRL) {
 		if ((scan&0x00ff) > (SCAN_SET_1.length+2)) { return '\0'; }
 		int x=(cast(int)SCAN_SET_1[scan&0x00ff])-96;
 		if (x<0) {
@@ -169,6 +181,15 @@ char read_KB() {
 
 char[1024] KB_BUFFER;
 uint KB_BUFFLEN=0;
+ubyte KB_KEYMAP=0;
+const static ubyte KB_LEFT=1;
+const static ubyte KB_RIGHT=2;
+const static ubyte KB_UP=4;
+const static ubyte KB_DOWN=8;
+const static ubyte KB_LSHIFT=16;
+const static ubyte KB_RSHIFT=32;
+const static ubyte KB_CTRL=64;
+const static ubyte KB_ALT=128;
 
 static extern (C) void IRQ1();
 
