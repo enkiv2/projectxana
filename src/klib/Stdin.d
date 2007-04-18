@@ -141,7 +141,7 @@ char scan2char(ushort scan) {/+
 	if (scan==75) {
 		KB_KEYMAP|=KB_LEFT;
 	}
-	if (scan==76) {
+	if (scan==72) {
 		KB_KEYMAP|=KB_UP;
 	}
 	if (scan==77) {
@@ -174,13 +174,17 @@ char scan2char(ushort scan) {/+
 	if (KB_KEYMAP&KB_CTRL) {
 		if ((scan&0x00ff) > (SCAN_SET_1.length+2)) { return '\0'; }
 		int x=(cast(int)SCAN_SET_1[scan&0x00ff])-96;
+		if (x<0) { x+=(96-64); }
 		if (x<0) {
 			return '\0';
 		}
 		return cast(char) x;
+	} else {
+	if ((scan & 0x00ff) > (SCAN_SET_1.length+2)) { 
+		return '\0'; 
+	} else 
+		return SCAN_SET_1[scan & 0x00ff];
 	}
-	if ((scan & 0x00ff) > (SCAN_SET_1.length+2)) { return '\0'; }
-	return SCAN_SET_1[scan & 0x00ff];
 }
 
 char read_KB() {
