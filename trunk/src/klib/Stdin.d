@@ -136,6 +136,19 @@ char scan2char(ushort scan) {/+
 	}+/
 	if (scan&0x80) {
 		KB_KEYMAP=0;
+		scan&=0x7f;
+	}
+	if (scan==75) {
+		KB_KEYMAP|=KB_LEFT;
+	}
+	if (scan==76) {
+		KB_KEYMAP|=KB_UP;
+	}
+	if (scan==77) {
+		KB_KEYMAP|=KB_RIGHT;
+	}
+	if (scan==80) {
+		KB_KEYMAP|=KB_DOWN;
 	}
 	if (((scan & 42) == 42)){
 		KB_KEYMAP|=KB_LSHIFT;
