@@ -86,7 +86,7 @@ nasm -f elf -o obj/unreal.o src/nucleus/i386/unreal.asm
 echo "Assembling irq"
 nasm -f elf -o obj/irq.o src/nucleus/i386/irq.asm
 echo "Compiling kmain"
-gdc -mno-mmx -mno-3dnow -mno-sse2 -mno-sse3 -mno-sse -m386 -frelease -c -nostdinc -mno-tls-direct-seg-refs -o obj/00kmain.o -Isrc/xulib -Isrc/typeinfo -Isrc/klib  -Isrc/internal -Isrc/ -Isrc/aileta src/object.d src/nucleus/nucleus.d
+gdc -mno-mmx -mno-3dnow -mno-sse2 -mno-sse3 -mno-sse -m386 -frelease -c -nostdinc -mno-tls-direct-seg-refs -o obj/00kmain.o -Isrc/xulib -Isrc/typeinfo -Isrc/klib  -Isrc/internal -Isrc/ -Isrc/xulib/estage -Isrc/klib/estage -Isrc/aileta src/object.d src/nucleus/nucleus.d
 echo "Compiling math"
 for item in src/libm/*.c ; do
 	gcc -m386 -mno-mmx -mno-3dnow -mno-sse2 -mno-sse3 -mno-sse -mno-tls-direct-seg-refs -c -nostdinc -Isrc/libm -o obj/math/stage2/${item##src/libm/}.o $item

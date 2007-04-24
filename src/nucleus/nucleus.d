@@ -21,7 +21,7 @@ private import unreal; // for flat memory
 private import paging;
 
 private import logo;
-//private import aileta;
+private import aileta;
 
 private import Graphics;
 private import gstage.logo_gfx;
@@ -63,13 +63,13 @@ extern (C) void kmain ( MultibootInfo multiboot, uint magic ) {
 //	gstage.logo_gfx.LOGO_RLE.draw(0, 0, 0);
 //	gstage.logo_gfx.logo_init();
 //	gstage.logo_gfx.LOGO.draw(0, 0, 0);
-//	writeln("Press any key to start the AILETA interface");
-//	while(getc()=='\0') {}
-//	puts("Generating NODE info...");
-//	aileta.init_node();
+	puts("Press any key to start the AILETA interface");
+	while(getc()=='\0') {}
+	puts("Generating NODE info...");
+	aileta.init_node();
 //	writeln("\t[OK]");
-//	puts("Starting AILETA...");
-//	aileta.init();
+	puts("Starting AILETA...");
+	aileta.init();
 //	puts("\nHalting.");
 	for ( ;; ) {} 
 	// normally, we'd go back to the calling function here, but that wouldn't be
