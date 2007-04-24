@@ -75,7 +75,7 @@ for item in src/xulib/stage2/*.d ; do
 done
 echo "Compiling Aileta"
 for item in src/aileta/*.d ; do
-	gdc -m386 -mno-mmx -mno-3dnow -mno-sse2 -mno-sse3 -mno-sse -mno-tls-direct-seg-refs -frelease -c -nostdinc -o obj/aileta.${item##src/aileta}.o -Isrc/xulib -Isrc/klib -Isrc/internal -Isrc/ src/object.d $item
+	gdc -m386 -mno-mmx -mno-3dnow -mno-sse2 -mno-sse3 -mno-sse -mno-tls-direct-seg-refs -frelease -c -nostdinc -o obj/aileta.${item##src/aileta/}.o -Isrc/xulib -Isrc/klib -Isrc/internal -Isrc/xulib/estage -Isrc/klib/estage -Isrc/ src/object.d $item
 done
 echo "Assembling gdt"
 nasm -f elf -o obj/00gdt.o src/nucleus/i386/gdt.asm

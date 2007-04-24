@@ -68,7 +68,7 @@ struct Term {
 	Color       foreground;
 	Color       background;
 
-	private Position size = { x:80, y:25 };
+	protected Position size = { x:80, y:25 };
 
 	public void setColor ( Color fg, Color bg ) {
 		this.foreground = fg;
