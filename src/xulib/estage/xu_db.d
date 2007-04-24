@@ -12,10 +12,13 @@ typedef uint64_t[Enfilade][] xuloc;
 
 struct xudb {
 	uint loclength;
-	xuloc lengths;
-	XuLink[Enfilade][] transpointers;
+	uint64_t[][Enfilade] loc;
+	uint64_t[][Enfilade] toc;
+/+	XuLink[Enfilade][] transpointers;
 	XuClude[Enfilade][] transclusions;
 	Doc[Enfilade] docs;
 	XuTitle titles;
++/
+	XuDoc[][] docs;
 }
 

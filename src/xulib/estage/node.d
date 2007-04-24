@@ -52,8 +52,8 @@ struct XuNode {
 	uint size;
 	T db;
 	uint64_t[Enfilade][] loc;
-	uint64_t[4][Enfilade] toc;
-	uint64_t e0, e1, e2, e3;
+	uint64_t[Enfilade][] toc;
+//	uint64_t e0, e1, e2, e3;
 	void init(T db) {
 		this.db=db;
 	}
@@ -69,12 +69,12 @@ struct XuNode {
 		uint64_t toclen=cast(uint64_t) db[0];
 		loc=cast(uint64_t[Enfilade][]) db[6 .. toclen];
 		uint64_t start=6+toclen;
-		e0=start;
+//		e0=start;
 		foreach (Enfilade e, uint64_t i; loc[0]) {
 			start+=i;
-			toc[e][0]=start;
+			toc[0][e]=start;
 		}
-		e1=start;
+/+		e1=start;
 		foreach (Enfilade e, uint64_t i; loc[1]) {
 			start+=i;
 			toc[e][1]=start;
@@ -89,16 +89,16 @@ struct XuNode {
 			start+=i;
 			toc[e][3]=start;
 		}
-		size=start;
++/		size=start;
 	}
 	void recalcToc() {
 		uint64_t start=6+loc.sizeof;
-		e0=start;
+//		e0=start;
 		foreach (Enfilade e, uint64_t i; loc[0]) {
 			start+=i;
-			toc[e][0]=start;
+			toc[0][e]=start;
 		}
-		e1=start;
+/+		e1=start;
 		foreach (Enfilade e, uint64_t i; loc[1]) {
 			start+=i;
 			toc[e][1]=start;
@@ -113,16 +113,16 @@ struct XuNode {
 			start+=i;
 			toc[e][2]=start;
 		}
-		size=start;
++/		size=start;
 	}
 	XuDoc get(Enfilade e) {
-		if (toc[e]==null) {
+		if (toc[0][e]==0) {
 			XuDoc t;
 			return t;
 		}
 		uint64_t start=0;
-		XuLink[] link=cast(XuLink[]) db[toc[e][0] .. toc[e][0]+loc[0][e]];
-		XuClude[] trans=cast(XuClude[]) db[toc[e][1] .. toc[e][1]+loc[1][e]];
+		XuDoc fullDoc=(cast(XuDoc[]) db[toc[0][e] .. toc[0][e]+loc[0][e]])[0];
+/+		XuClude[] trans=cast(XuClude[]) db[toc[e][1] .. toc[e][1]+loc[1][e]];
 		Doc doc[]=cast(Doc[]) db[toc[e][2] .. toc[e][2]+loc[2][e]];
 		char[] title=cast(char[]) db[toc[e][3] .. toc[e][3]+loc[2][e]];
 		XuDoc fullDoc;
@@ -130,12 +130,12 @@ struct XuNode {
 		fullDoc.links=link;
 		fullDoc.cludes=trans;
 		fullDoc.title=title;
-		return fullDoc;
++/		return fullDoc;
 	}
 	XuDoc add(XuDoc doc, Enfilade e) {
-		uint64_t start=e0;
-		uint64_t end=e1;
-		XuLink[Enfilade][] links=cast(XuLink[Enfilade][]) db[start .. end];
+		uint64_t start=size;
+//		uint64_t end=e1;
+/+		XuLink[Enfilade][] links=cast(XuLink[Enfilade][]) db[start .. end];
 		foreach (uint i, XuLink l; doc.links) {
 			links[i][e]=l;
 		}
@@ -159,6 +159,11 @@ struct XuNode {
 			titles[i][e]=d;
 		}
 		loc[3][e]=doc.title.sizeof;
++/
+		XuDoc[] doc2;
+		doc2[0]=doc;
+		db[start .. doc.sizeof]=cast(void[])(doc2);
+		loc[0][e]=doc.sizeof;
 		recalcToc();
 		return doc;
 	}
