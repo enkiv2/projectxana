@@ -88,6 +88,7 @@ void init_node() {
 //	x.length=5000000;
 	filesystem.init(x);
 	filesystem.format();
+	filesystem.setup();
 }
 void init() {
 	current~=1;
