@@ -64,7 +64,7 @@ extern (C) void kmain ( MultibootInfo multiboot, uint magic ) {
 //	gstage.logo_gfx.logo_init();
 //	gstage.logo_gfx.LOGO.draw(0, 0, 0);
 	puts("Press any key to start the AILETA interface");
-	while(getc()=='\0') {}
+	while(getc()=='\0') { asm{hlt;} }
 	puts("Generating NODE info...");
 	aileta.init_node();
 //	writeln("\t[OK]");

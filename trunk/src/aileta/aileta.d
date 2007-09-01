@@ -40,6 +40,7 @@ char process_z2_key() {
 	char k=Stdin.read(1)[0];
 	while (k=='\0' && Stdin.KB_KEYMAP==0) {
 		k=Stdin.read(1)[0];
+		asm{hlt;}
 	}
 	if (KB_KEYMAP&KB_LEFT) {
 		current=filesystem.get(current).cludes[0].forward;
@@ -73,6 +74,7 @@ char process_z2_key() {
 
 void do_z2() {
 	bool done=0;
+	asm{hlt;}
 	char k=Stdin.read(1)[0];
 	while (!done) {
 		draw_z2();

@@ -28,11 +28,11 @@ const ushort COMMAND_WRITE_WITH_RETRY=0x30;
 
 alias ulong LBA;
 
-void[] HD_readd(ushort drive, ushort head, ulong cylinder, ushort sector, ushort length, ushort start=0) {
+void[] HD_readd(ushort drive, ushort head, ulong cylinder, ushort sector, ushort len, ushort start=0) {
 	ubyte[] buf;
 	ubyte temp;
 	outByte(DRIVE_AND_HEAD_PORT, cast(ubyte)((drive<<4)|head));
-	outByte(SECTOR_COUNT_PORT, cast(ubyte)length);
+	outByte(SECTOR_COUNT_PORT, cast(ubyte)len);
 	outByte(SECTOR_NUMBER_PORT, cast(ubyte)sector);
 	outByte(CYLINDER_LOW_PORT, (cast(ubyte)cylinder));
 	outByte(CYLINDER_HIGH_PORT, (cast(ubyte)(cylinder>>8)));
@@ -41,7 +41,7 @@ void[] HD_readd(ushort drive, ushort head, ulong cylinder, ushort sector, ushort
 		while (inWord(COMMAND_PORT)&255) {}
 		inByte(DATA_PORT);
 	}
-	for (int i=0; i<length; i++) {
+	for (int i=0; i<len; i++) {
 		while (inWord(COMMAND_PORT)&255){}
 		temp=inByte(DATA_PORT);
 		if (!(inWord(STATUS_PORT)&1)) {
@@ -84,7 +84,7 @@ int HD_write(ushort drive, LBA lba, void[] data, ushort start_head=0, ushort end
 	return -1;
 }
 
-void[] HD_read(ushort drive, LBA lba, ushort length, ushort start_head=0, ushort end_head=HEADS_PER_CYLINDER, ushort start_cylinder=0, ushort end_cylinder=MAX_CYLINDERS, ushort start_sector=0, ushort end_sector=SECTORS_PER_TRACK) {
+void[] HD_read(ushort drive, LBA lba, ushort len, ushort start_head=0, ushort end_head=HEADS_PER_CYLINDER, ushort start_cylinder=0, ushort end_cylinder=MAX_CYLINDERS, ushort start_sector=0, ushort end_sector=SECTORS_PER_TRACK) {
 	ushort head;
 	ushort cylinder;
 	ushort sector;
@@ -94,7 +94,7 @@ void[] HD_read(ushort drive, LBA lba, ushort length, ushort start_head=0, ushort
 	cylinder+=start_cylinder;
 	sector+=start_sector;
 	if (head <= end_head && cylinder <= end_cylinder && sector <= end_sector) {
-		return HD_readd(drive, head, cylinder, sector, length)[start .. start+length];
+		return HD_readd(drive, head, cylinder, sector, len)[start .. start+length];
 	}
 	ubyte[] x;
 	return x;
@@ -114,9 +114,9 @@ void lba2chs (in LBA lba, out ushort head, out ushort cylinder, out ushort secto
 struct MMDisk {
 	ulong size;
 	ubyte drive=0x0a;
-	ulong length;
+	ulong len;
 	void init() {
-		length=size;
+		len=size;
 	}
 	void* opIndex(ulong i) {
 		if (i>size) {
@@ -157,7 +157,7 @@ struct MMPart {
 	ubyte start_head;
 	ubyte end_head;
 	ubyte fs_type;
-	ulong length;
+	ulong len;
 	void init() {
 		bootable=((cast(ubyte)HD_read(drive, 446, 1)[0])==0x80);
 		start_head=(cast(ubyte[])HD_read(drive, 446+1, 1))[0];
@@ -169,7 +169,7 @@ struct MMPart {
 		end_cylinder=(((cast(ushort)temp[2])<<8)|(cast(ushort)temp[3]));
 		end_sector=(temp[2]&0x1F);
 		fs_type=(cast(ubyte[])HD_read(drive, 446+4, 1))[0];
-		length=size;
+		len=size;
 	}
 	void* opIndex(ulong i) {
 		return &(HD_read(drive, i, 1, start_head, end_head, start_cylinder, end_cylinder, start_sector, end_sector)[0]);
