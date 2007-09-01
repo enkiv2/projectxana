@@ -1,0 +1,17 @@
+Memory.d
+
+This provides the new(er) memory routines, and has some nice features improved 
+over klib/memory.d
+
+Provides:
+
+struct Heap		a very simple heap. See xulib/node.d for the XuHeap 
+				extension.
+void memcpy (void* src, void* dst, uint size)	memcpy(). we have c/asm 
+						replacements, but this is 
+						good for now
+void copy(void *src, void* dst, uint size)	see memcpy
+void _d_array_bounds()		standin.
+uint compare (T) (in T m1, in T m2, in uint length)	memcmp should be used 
+							instead
+

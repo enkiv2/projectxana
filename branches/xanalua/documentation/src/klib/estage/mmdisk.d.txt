@@ -1,0 +1,85 @@
+mmdisk.d
+
+This module provides basic functions for hard disk support, as well as data 
+structures for accessing disks as arrays (like memory mapped files).
+
+Provides:
+
+static const ubyte ENFS_PARTITION_CODE		The partition type code for 
+						ENFS (the ENfilade File System)
+
+const ushort MAX_CYLINDERS			Hard disk limits
+const ushort HEADS_PER_CYLINDER			
+const ushort SECTORS_PER_TRACK			
+
+const ushort DRIVE_AND_HEAD_PORT		Hard disk access port numbers
+const ushort SECTOR_COUNT_PORT			
+const ushort SECTOR_NUMBER_PORT			
+const ushort CYLINDER_LOW_PORT			
+const ushort CYLINDER_HIGH_PORT			
+const ushort COMMAND_PORT			
+const ushort STATUS_PORT			
+const ushort DATA_PORT				
+
+const ushort COMMAND_READ_WITH_RETRY		Hard disk access command codes
+const ushort COMMMAND_WRITE_WITH_RETRY		
+
+alias ulong LBA					Logical Block Address type
+
+void[] HD_readd(ushort drive, ushort head, 	Direct disk read
+	ulong cylinder, ushort sector, 
+	ushort length)
+int HD_writed(ushort drive, ushort head, 	Direct disk read. Returns -1 
+	ulong cylinder, ushort sector, 		on error
+	void[] data)
+int HD_write(ushort drive, LBA lba, 		HD_writed wrapper, with LBA and 
+	void[] data, ushort start_head, 	limits. start_* defaults to 
+	ushort end_head, ushort 		0, and end_* defaults 
+	start_cylinder, ushort 			to its corresponding maximum
+	end_cylinder, ushort start_sector, 	(see above).
+	ushort end_sector)			Returns -1 on error
+void[] HD_read(ushort drive, LBA lba, 		HD_readd wrapper (see above)
+	ushort length, ushort start_cylinder, 
+	ushort end_cylinder, ushort 
+	start_sector, ushort end_sector)
+
+LBA chs2lba(ushort head, ushort cylinder, 	Converts CHS (Cylinder Head 
+	ushort sector)				Sector) addressing into 
+						LBA (single block number)
+void lba2chs(in LBA lba, out ushort head, 	Converts LBA to CHS (see above).
+	out ushort cylinder, out ushort 
+	sector)
+
+struct MMDisk					Memory mapped disk
+- ulong size
+- ubyte drive					0x0a-0x0d, normally (hda-hdd, 
+						or c-f for those windoze users)
++ void* opIndex(ulong i)
++ void opIndexApply(ubyte value, ulong i)
++ void[] opSlice(ulong start, ulong end)
++ void opSliceAssign(void[] value, ulong 	Some voodoo in here -- we move
+	start, ulong end)			the data on reallocation
+
+struct MMPart					Memory mapped partition
+- ulong size					
+- ubyte drive					
+- ushort partnumber				Partition number
+- bool bootable					The bootable/active flag
+- ulong start_cylinder				These set by init()
+- ubyte start_sector				
+- ulong end_cylinder				
+- ubyte end_sector				
+- ubyte start_head				
+- ubyte end_head				
+- ubyte fs_type					FS type code (also set by init)
++ void init()					Sets up basic instance variables
+						based on drive and partnumber.
++ void* opIndex(ulong i)			
++ void opIndexApply(ubyte value, ulong i)	
++ void[] opSlice(ulong start, ulong end)	
++ void opSliceAssign(void[] value, 
+	ulong start, ulong end)
+
+Bugs:
+- Currently assumes that disk sectors are 1 byte (they're actually 512). Too 
+lazy to fix this now, since it's both boring and slightly nontrivial ;-) [JMO]

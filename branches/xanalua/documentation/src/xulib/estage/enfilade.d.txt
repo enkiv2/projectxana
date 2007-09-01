@@ -1,0 +1,17 @@
+enfilade.d
+
+Provides the enfilade address data structure, used for versioned addressing.
+
+Formats:
+	Tumbler := <number>*(.<number>)
+	Enfilade := <Tumbler>*(.0.<Tumbler>)v<number>
+
+Provides:
+
+typedef uint64_t[uint64_t] Tumbler	a series of numbers. Looks like: 1.2.4
+struct Enfilade				constructed of a series of tumblers and 
+					a version. Looks like: 2.6.3.0.1.3.0.7v2
++ Enfilade[] opShr(Enfilade e)		returns all the enfilades between this 
+					and e
+char[] enfiladeSerialize(Enfilade x)	should take this out
+

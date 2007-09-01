@@ -1,0 +1,75 @@
+megs: 32
+
+log: bochs_debug.log
+
+romimage: file=bios.img, address=0xf0000
+vgaromimage: file=video.img
+
+#floppya: 1_44=/dev/fd0, status=inserted
+floppya: 1_44=./fd0.img, status=inserted
+
+ata0: enabled=1, ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14
+ata1: enabled=0, ioaddr1=0x170, ioaddr2=0x370, irq=15
+ata2: enabled=0, ioaddr1=0x1e8, ioaddr2=0x3e0, irq=11
+ata3: enabled=0, ioaddr1=0x168, ioaddr2=0x360, irq=9
+
+ata0-master: type=disk, mode=flat, path="hd.img",
+#ata0-slave: type=cdrom, path=D:, status=inserted
+#ata0-slave: type=cdrom, path=/dev/cdrom, status=inserted
+#ata0-slave: type=cdrom, path="drive", status=inserted
+#ata0-slave: type=cdrom, path=/dev/rcd0d, status=inserted 
+
+boot: floppy
+
+ips: 1000000
+
+#floppy_bootsig_check: disabled=1
+floppy_bootsig_check: disabled=0
+
+panic: action=ask
+error: action=report
+info: action=report
+debug: action=ignore
+#pass: action=fatal
+
+#debugger_log: /dev/null
+debugger_log: debugger.out
+#debugger_log: ./tmp/debug/debugger.out
+
+#com1: enabled=1, dev=/dev/ttyp9
+
+parport1: enabled=1, file="parport.txt"
+
+#sb16: midimode=1, midi=/dev/midi00, wavemode=1, wave=/dev/dsp, loglevel=2, log=sb16.log, dmatimer=600000
+
+vga_update_interval: 300000
+
+keyboard_serial_delay: 250
+
+keyboard_paste_delay: 100000
+
+floppy_command_delay: 500
+
+mouse: enabled=0
+
+private_colormap: enabled=0
+
+#=======================================================================
+# ne2k: ioaddr=0x240, irq=9, mac=fe:fd:00:00:00:01, ethmod=fbsd, ethdev=en0 #macosx
+# ne2k: ioaddr=0x240, irq=9, mac=b0:c4:20:00:00:00, ethmod=fbsd, ethdev=xl0
+# ne2k: ioaddr=0x240, irq=9, mac=b0:c4:20:00:00:00, ethmod=linux, ethdev=eth0
+# ne2k: ioaddr=0x240, irq=9, mac=b0:c4:20:00:00:01, ethmod=win32, ethdev=MYCARD
+# ne2k: ioaddr=0x240, irq=9, mac=fe:fd:00:00:00:01, ethmod=tap, ethdev=tap0
+# ne2k: ioaddr=0x240, irq=9, mac=fe:fd:00:00:00:01, ethmod=tuntap, ethdev=tun0, script=./tunconfig
+#=======================================================================
+
+keyboard_mapping: enabled=0, map=
+
+#magic_break: enabled=1
+#cmosimage: cmos.img
+#load32bitOSImage: os=nullkernel, path=../kernel.img, iolog=../vga_io.log
+#load32bitOSImage: os=linux, path=../linux.img, iolog=../vga_io.log, initrd=../initrd.img
+#i440fxsupport: enabled=1
+#usb1: enabled=1, ioaddr=0xFF80, irq=10
+#text_snapshot_check: enable
+

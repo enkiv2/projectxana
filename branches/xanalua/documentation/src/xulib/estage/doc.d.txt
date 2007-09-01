@@ -1,0 +1,10 @@
+doc.d
+
+Provides the linked document structure central to a xanalogical system.
+
+Provides:
+
+typedef char[Enfilade][] XuTitle	document title
+struct Doc				document as stored in a node
+struct XuDoc				document as passed to and from a node
+

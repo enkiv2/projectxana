@@ -1,0 +1,13 @@
+Port.d
+
+This module provides port access.
+
+Provides:
+
+ubyte inByte(ushort port)
+ushort inWord(ushort port)
+void inWord(in ushort port, out short value)
+void inByte(in ushort port, out ubyte value)
+void outByte(in ushort port, in ubyte value)
+void outWord(in ushort port, in ushort value)
+

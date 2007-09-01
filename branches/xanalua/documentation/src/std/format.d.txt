@@ -1,0 +1,25 @@
+format.d
+
+Provides sprintf-style functions.
+
+Provides:
+
+char[] format(char[] f, ...)		Replaces each %s in f with the 
+					toString() of its corresponding 
+					argument. Only works on:
+						char[]
+						char
+						int
+						uint
+						float
+						double
+						long
+						ulong
+					It also does not keep track of the 
+					number of %s, nor does it do any type 
+					matching or formatting args (ONLY %s).
+					If you have stuff left out, it means 
+					you either are using the wrong type 
+					(no objects!) or you're not giving 
+					enough args. If it's shifted, you forgot
+					an arg.

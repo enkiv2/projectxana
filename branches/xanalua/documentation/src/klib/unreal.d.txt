@@ -1,0 +1,11 @@
+ureal.d
+
+Provides unreal mode.
+
+Provides:
+
+protected bool isUnreal			If 1, we're in unreal mode
+private extern (C) void unreal()	Prototype for 'unreal' in unreal.asm
+public void setUnreal()			Goes into unreal mode and sets isUnreal
+					only if isUnreal is off.
+NB: Should be taken out.

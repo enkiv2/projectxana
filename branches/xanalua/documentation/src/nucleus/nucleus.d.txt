@@ -1,0 +1,14 @@
+nucleus.d
+
+The "Real" nucleus. Contains kmain(). Starts unreal mode, builds the IDT, 
+sets up a real KB handler, prints the bootup logo, and calls the aileta init
+functions (which currently do nothing). After that it prints "Halting." and 
+halts.
+
+Provides:
+
+static idt.IDT Idt				The IDT
+
+public extern(C) void kmain(			Starts kernel
+	MultibootInfo multiboot, uint 
+	magic)

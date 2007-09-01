@@ -1,0 +1,5 @@
+title XANA floppy
+root (fd0)
+kernel /dnucleus.elf
+boot
+

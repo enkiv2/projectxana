@@ -1,0 +1,9 @@
+util.d
+
+Provides basic utility functions.
+
+Provides:
+
+int isNull(T) (T t)			Tests if t is a blank (uinitialized) T
+T newNull(T) (T t) 			Returns an uninitialized T
+

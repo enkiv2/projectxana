@@ -1,0 +1,19 @@
+Stdout.d
+
+Provides console text output functionality.
+
+Provides:
+
+public enum Color		console text colours
+struct Position			a screen position (x, y)
+struct Character		a char and its attribute
+struct Term			a console
+- void setColor (Color fg, Color bg)
+- void moveHWCursor(uint x, uint y)
+- void clearScreen()
+- void putChar(char c)
+- void gotoPosition(uint x, uint y)	use this instead of moveHWCursor()
+- void newLine()			handles \n
+- void scrollDown(uint lines=1)
+Term Stdout			console stdout
+void initStdout (Color foreground, color background)

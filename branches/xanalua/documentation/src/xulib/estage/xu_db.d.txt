@@ -1,0 +1,8 @@
+xu_db.d
+
+Provides a structure for a blank XuNode
+
+Provides:
+
+struct xudb				The struct for a blank XuNode
+
