@@ -36,7 +36,7 @@ void setFinalizer(void* p, void(*finalizer)(void* p, void* dummy)) {
 	
 }
 
-void* malloc(uint size) {
+extern(C) void* malloc(uint size) {
 	return _mem.malloc(size);
 }
 

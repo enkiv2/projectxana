@@ -9,16 +9,19 @@ import Stdout;
 import Stdin;
 import std.format;
 import std.stdarg;
+import std.string;
+import std.memory;
 
 extern (C) int kernel_assert_strlen(char*);
 
-void putc(char c) {
+extern(C) void putc(char c) {
 	if (Stdout.Stdout.cursor.x>=25 && Stdout.Stdout.cursor.y>=80) {
 		Stdout.Stdout.scrollDown();
 	}
 	Stdout.Stdout.putChar(c);
 //	kernel_assert_print(&c, 1, 0);
 }
+
 
 void puts(char[] s) {
 /+	foreach (c; s) {
@@ -41,15 +44,25 @@ void writefl(char[] f, TypeInfo[] args, va_list argptr, void* p_args) {
 
 void writeln(char[] f) {
 	puts(f);
-	puts("\n");
+	putc('\n');
 }
 
-char getc() {
+extern(C) char getc() {
 	return KB_read();
 }
 
+/*private extern(C) char* read(int l) {
+	return cast(char*)(cast(void*)(read(l)~'\0'));
+}*/
+
 char[] read(int l) {
 	return KB_read(l);
+}
+
+private extern(C) char* gets(char* s) {
+	char[] s2=gets('\n');
+	memcpy(cast(void*)s, (cast(void*)(s2~"\0")), s2.length);
+	return s;
 }
 
 char[] gets(char delim=' ') {
