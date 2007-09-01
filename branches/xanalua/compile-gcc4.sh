@@ -61,6 +61,10 @@ echo "Compiling klib (gstage)"
 for item in src/klib/gstage/*.d ; do
 	gdc -mtune=i386 -mno-mmx -mno-3dnow -mno-sse2 -mno-sse3 -mno-sse -mno-tls-direct-seg-refs -frelease -c -nostdinc -o obj/klib.gstage.${item##src/klib/gstage/}.o -Isrc/klib -Isrc/xulib -Isrc/std -Isrc/internal -Isrc/ -combine src/object.d $item
 done
+echo "Compiling klib (lstage)"
+for item in src/klib/lstage/*.c ; do
+	gcc -mtune=i386 -mno-mmx -mno-3dnow -mno-sse2 -mno-sse3 -mno-sse -mno-tls-direct-seg-refs -c -nostdinc -o obj/klib.${item##src/klib/lstage/}.o -Isrc/klib $item
+done
 echo "Compiling xulib"
 for item in src/xulib/*.d ; do
 	gdc -mtune=i386 -mno-mmx -mno-3dnow -mno-sse2 -mno-sse3 -mno-sse -mno-tls-direct-seg-refs -frelease  -c -nostdinc -U object -U Object -U TypeInfo -U object.Typeinfo -o obj/xulib.${item##src/xulib/}.o -Isrc/xulib -Isrc/klib -Isrc/internal -Isrc/ -combine src/object.d $item
@@ -100,5 +104,5 @@ cd src/lua
 make core
 cd ../..
 echo "Linking"
-ld  -nostdlib -z muldefs  -static -Tlink.ld -o bin/dnucleus.elf obj/*.o obj/*/estage/*.o
+ld  -nostdlib -z muldefs  -static -Tlink.ld -o bin/dnucleus.elf obj/*.o obj/*/estage/*.o src/lua/*.o
 
