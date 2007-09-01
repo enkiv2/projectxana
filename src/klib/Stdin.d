@@ -219,6 +219,8 @@ const static ubyte KB_RSHIFT=32;
 const static ubyte KB_CTRL=64;
 const static ubyte KB_ALT=128;
 
+bool key_waiting=0;
+
 static extern (C) void IRQ1();
 
 static extern (C) void KB_handle () {
@@ -239,6 +241,7 @@ static extern (C) void KB_handle () {
 +/
 	KB_BUFFER[++KB_BUFFLEN]=read_KB();
 	putc(KB_BUFFER[KB_BUFFLEN]);
+	key_waiting=1;
 	pic.EOI();
 /+	asm {
 //		push EBP;
@@ -256,9 +259,16 @@ static extern (C) void KB_handle () {
 }
 
 char[] KB_read(int l) {
-	char[] temp= KB_BUFFER[0 .. l];
+	char[] temp;
+	if(key_waiting) {
+	temp= KB_BUFFER[0 .. l];
 	KB_BUFFER[0 .. KB_BUFFLEN - l]=KB_BUFFER[l .. KB_BUFFLEN];
 	KB_BUFFLEN-=l;
+	if (KB_BUFFLEN<=0) {
+		key_waiting=0;
+		temp="\0";
+	}
+	}
 /+	for (int i=l; i<KB_BUFF_LEN; i++) {
 		KB_BUFFER[i]='\0';
 	}
@@ -266,14 +276,21 @@ char[] KB_read(int l) {
 }
 
 char KB_read() {
+	if (key_waiting) {
 	char temp=KB_BUFFER[0];
 	KB_BUFFER[0 .. KB_BUFFLEN-1]=KB_BUFFER[1 .. KB_BUFFLEN];
 	KB_BUFFLEN-=1;
+	if (KB_BUFFLEN==0) {
+		key_waiting=0;
+	}
 	return temp;
+	}
+	return '\0';
 }
 
 void init_KB (inout IDT i) {
 	KB_BUFFLEN=0;
+	key_waiting=0;
 	i.set(IRQs.IRQ1, &IRQ1);
 //	i.refresh();
 }
