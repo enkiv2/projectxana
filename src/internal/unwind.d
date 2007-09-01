@@ -40,7 +40,7 @@ alias __builtin_abi_int  _Unwind_Sword;
 */
 alias uint _Unwind_Word;
 alias int _Unwind_Sword;
-//typedef void * _Unwind_Internal_Ptr; // this should be an unsigned of pointer size...
+typedef void * _Unwind_Internal_Ptr; // this should be an unsigned of pointer size...
 
 // D Note: rearranged because we don't have __attribute__((mode()))
 
@@ -175,7 +175,7 @@ _Unwind_Word _Unwind_GetCFA (_Unwind_Context *);
 void *_Unwind_GetLanguageSpecificData (_Unwind_Context *);
 
 _Unwind_Ptr _Unwind_GetRegionStart (_Unwind_Context *) {
-	return 0;
+	return null;
 }
 
 
@@ -223,13 +223,13 @@ _Unwind_GetDataRelBase (_Unwind_Context *_C)
 {
   /* The GP is stored in R1.  */
  // return _Unwind_GetGR (_C, 1);
- return 0;
+ return null;
 }
 
 extern (C) _Unwind_Ptr _Unwind_GetTextRelBase (_Unwind_Context *_C)
 {
 //  return _Unwind_GetGR(_C, 1);
-return 0;
+return null;
 }
 
 /* @@@ Retrieve the Backing Store Pointer of the given context.  */
@@ -409,7 +409,8 @@ read_encoded_value_with_base (ubyte encoding, _Unwind_Ptr base,
   if (encoding == DW_EH_PE_aligned)
     {
       _Unwind_Internal_Ptr a = cast(_Unwind_Internal_Ptr) p;
-      a = cast(_Unwind_Internal_Ptr)( (a + (void *).sizeof - 1) & - (void *).sizeof );
+ //     a = cast(_Unwind_Internal_Ptr)( (a + (void *).sizeof - 1) & - (void *).sizeof );
+ 	a=null;
       result = * cast(_Unwind_Internal_Ptr *) a;
       p = cast(ubyte *) cast(_Unwind_Internal_Ptr) (a + (void *).sizeof);
     }
@@ -468,10 +469,10 @@ read_encoded_value_with_base (ubyte encoding, _Unwind_Ptr base,
 	  abort.abort ();
 	}
 
-      if (result != 0)
+      if (result != null)
 	{
-	  result += ((encoding & 0x70) == DW_EH_PE_pcrel
-		     ? cast(_Unwind_Internal_Ptr) u : base);
+//	  result += ((encoding & 0x70) == DW_EH_PE_pcrel
+//		     ? cast(_Unwind_Internal_Ptr) u : base);
 	  if (encoding & DW_EH_PE_indirect)
 	    result = *cast(_Unwind_Internal_Ptr *) result;
 	}
