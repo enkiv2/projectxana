@@ -480,7 +480,7 @@ body
 
     if (newlength)
     {
-	version (GNU)
+/*	version (GNU)
 	{
 	    // required to output the label;
 	    static char x = 0;
@@ -502,11 +502,11 @@ body
 	}
 	else
 	{
-	    size_t newsize = sizeelem * newlength;
+*/	    size_t newsize = sizeelem * newlength;
 
 	    if (newsize / newlength != sizeelem)
 		goto Loverflow;
-	}
+//	}
 	//printf("newsize = %x, newlength = %x\n", newsize, newlength);
 
 	if (p.data)
