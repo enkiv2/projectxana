@@ -6,7 +6,7 @@
 module Stdout;
 
 private import Port;
-private import Memory;
+public import Memory;
 private import Stdin;
 
 extern (C) void kernel_assert_clear();

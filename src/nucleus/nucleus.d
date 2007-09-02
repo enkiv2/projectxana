@@ -5,6 +5,8 @@
  +/
 private import Multiboot;
 
+import kernel_assert;
+
 private import std.stdio;
 private import Stdout;
 
@@ -66,9 +68,11 @@ extern (C) void kmain ( MultibootInfo multiboot, uint magic ) {
 	puts("Press any key to start the AILETA interface");
 	while(getc()=='\0') { asm{hlt;} }
 	puts("Generating NODE info...");
+//	kernel_assert.kernel_assert(69, "nucleus.d", "just before aileta.init_node()");
 	aileta.init_node();
 //	writeln("\t[OK]");
 	puts("Starting AILETA...");
+	Stdout.Stdout.clearScreen();
 	aileta.init();
 //	puts("\nHalting.");
 	for ( ;; ) {} 

@@ -1,5 +1,6 @@
 module aileta;
 
+import kernel_assert;
 import std.stdio;
 import Stdout;
 import Stdin;
@@ -37,9 +38,9 @@ void draw_z2() {
 }
 
 char process_z2_key() {
-	char k=Stdin.read(1)[0];
+	char k=Stdin.KB_read();
 	while (k=='\0' && Stdin.KB_KEYMAP==0) {
-		k=Stdin.read(1)[0];
+		k=Stdin.KB_read();
 		asm{hlt;}
 	}
 	if (KB_KEYMAP&KB_LEFT) {
@@ -75,7 +76,7 @@ char process_z2_key() {
 void do_z2() {
 	bool done=0;
 	asm{hlt;}
-	char k=Stdin.read(1)[0];
+	char k=Stdin.KB_read();
 	while (!done) {
 		draw_z2();
 		k=process_z2_key();
@@ -85,11 +86,14 @@ void do_z2() {
 	}
 }
 
-void init_node() {
-	void[] x;
-//	x.length=5000000;
+void init_node() { //kernel_assert.kernel_assert(89, "aileta.d", "init_node called");
+	void[] x; //kernel_assert.kernel_assert(1, "aileta.d", "90");
+	x.length=500;
+	kernel_assert.kernel_assert(92, "aileta.d", "init_node past void[] x");
 	filesystem.init(x);
+//	kernel_assert.kernel_assert(94, "aileta.d", "init_node past filesystem.init()");
 	filesystem.format();
+	kernel_assert.kernel_assert(96, "aileta.d", "init_node past filesystem_format");
 	filesystem.setup();
 }
 void init() {

@@ -41,6 +41,7 @@ import gc;
 import gcstub;
 import object;
 
+import kernel_assert;
 import std.c.stdarg;
 //import internal.memset;
 import std.memory;
@@ -234,7 +235,9 @@ extern (C) Array _d_newarrayT(TypeInfo ti, size_t length)
 {
     Array result;
     auto size = ti.next.tsize();		// array element size
-
+    
+//    kernel_assert.kernel_assert(238, "gc2.d", "_d_newarrayT");
+    
 //    debug(PRINTF) printf("_d_newT(length = %d, size = %d)\n", length, size);
     if (length && size)
     {
@@ -460,17 +463,17 @@ void new_finalizer(void* p, void* dummy) {
  * Resize dynamic arrays with 0 initializers.
  */
 
-byte[] _d_arraysetlengthT(TypeInfo ti, size_t newlength, Array *p)
+extern(C) byte[] _d_arraysetlengthT(TypeInfo ti, size_t newlength, Array *p)
 in
 {
     assert(ti);
     assert(!p.length || p.data);
 }
 body
-{
-    byte* newdata;
+{   //kernel_assert.kernel_assert(1, "gc2.d", "473");
+    byte* newdata; //kernel_assert.kernel_assert(1, "gc2.d", "474");
     size_t sizeelem = ti.next.tsize();
-
+    kernel_assert.kernel_assert(1, "gc2.d", "476");
     debug(PRINTF)
     {
 	printf("_d_arraysetlengthT(p = %p, sizeelem = %d, newlength = %d)\n", p, sizeelem, newlength);
@@ -503,7 +506,7 @@ body
 	else
 	{
 */	    size_t newsize = sizeelem * newlength;
-
+		kernel_assert.kernel_assert(1, "gc2.d", "509");
 	    if (newsize / newlength != sizeelem)
 		goto Loverflow;
 //	}
@@ -515,7 +518,7 @@ body
 	    if (newlength > p.length)
 	    {
 		size_t size = p.length * sizeelem;
-		size_t cap = _gc.capacity(p.data);
+		size_t cap = _gc.capacity(p.data); kernel_assert.kernel_assert(1, "gc2.d", "521");
 
 		if (cap <= newsize)
 		{
@@ -581,7 +584,7 @@ body
 
     if (newlength)
     {
-	version (GNU)
+/*	version (GNU)
 	{
 	    // required to output the label;
 	    static char x = 0;
@@ -603,11 +606,11 @@ body
 	}
 	else
 	{
-	    size_t newsize = sizeelem * newlength;
+*/	    size_t newsize = sizeelem * newlength;
 
 	    if (newsize / newlength != sizeelem)
 		goto Loverflow;
-	}
+//	}
 	//printf("newsize = %x, newlength = %x\n", newsize, newlength);
 
 	size_t size = p.length * sizeelem;

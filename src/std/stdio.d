@@ -10,7 +10,7 @@ import Stdin;
 import std.format;
 import std.stdarg;
 import std.string;
-import std.memory;
+//import klib.Memory;
 
 extern (C) int kernel_assert_strlen(char*);
 

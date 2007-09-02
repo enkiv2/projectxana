@@ -9,9 +9,10 @@ private import Port;
 private import Memory;
 private import idt;
 private import pic;
-private import std.stdio;
-private import gc;
+//private import std.stdio;
+//private import gc;
 private import kernel_assert;
+private import Stdout;
 
 char[] SCAN_SET_1 = [
 	1: '\x1b', 
@@ -240,7 +241,7 @@ static extern (C) void KB_handle () {
 	}
 +/
 	KB_BUFFER[++KB_BUFFLEN]=read_KB();
-	putc(KB_BUFFER[KB_BUFFLEN]);
+	Stdout.Stdout.putChar(KB_BUFFER[KB_BUFFLEN]);
 	key_waiting=1;
 	pic.EOI();
 /+	asm {
