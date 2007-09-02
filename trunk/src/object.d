@@ -59,12 +59,13 @@ struct OffsetTypeInfo
 
 class TypeInfo
 {
+    int size=1;
     /+
 	hash_t   getHash(void *p);
     int      equals(void *p1, void *p2);
     int      compare(void *p1, void *p2);+/
     size_t   tsize() {
-    	return 0;
+    	return size;
     }/+
     void     swap(void *p1, void *p2);
     TypeInfo next();

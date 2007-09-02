@@ -9,6 +9,7 @@ import doc;
 import xu_db;
 private import Memory;
 import enfilade;
+import kernel_assert;
 /+
 struct XuHeap {
 	uint size=0;
@@ -60,13 +61,14 @@ struct XuNode {
 	void fmt() {/+
 		if (is (T == XuHeap)) {
 			db.malloc(xudb.sizeof);
-		}+/
-		xudb x;
+		}+/kernel_assert.kernel_assert(1, "node.d", "64");
+		xudb x; kernel_assert.kernel_assert(1, "node.d", "65");
 		db[]=*(cast(void[x.sizeof]*)(cast(void*)&x));
 		init();
 	}
-	void init() {
+	void init() {kernel_assert.kernel_assert(1, "node.d", "69");
 		uint64_t toclen=cast(uint64_t) db[0];
+		kernel_assert.kernel_assert(1, "node.d", "70");
 		loc=cast(uint64_t[Enfilade][]) db[6 .. toclen];
 		uint64_t start=6+toclen;
 //		e0=start;
