@@ -472,8 +472,8 @@ in
 body
 {   //kernel_assert.kernel_assert(1, "gc2.d", "473");
     byte* newdata; //kernel_assert.kernel_assert(1, "gc2.d", "474");
-    size_t sizeelem = ti.next.tsize();
-    kernel_assert.kernel_assert(1, "gc2.d", "476");
+    size_t sizeelem = ti.tsize();
+    //kernel_assert.kernel_assert(1, "gc2.d", "476");
     debug(PRINTF)
     {
 	printf("_d_arraysetlengthT(p = %p, sizeelem = %d, newlength = %d)\n", p, sizeelem, newlength);
@@ -506,14 +506,14 @@ body
 	else
 	{
 */	    size_t newsize = sizeelem * newlength;
-		kernel_assert.kernel_assert(1, "gc2.d", "509");
+//		kernel_assert.kernel_assert(1, "gc2.d", "509");
 	    if (newsize / newlength != sizeelem)
 		goto Loverflow;
 //	}
 	//printf("newsize = %x, newlength = %x\n", newsize, newlength);
-
+//	kernel_assert.kernel_assert(1, "gc2.d", "514");
 	if (p.data)
-	{
+	{	kernel_assert.kernel_assert(1, "gc2.d", "516");
 	    newdata = p.data;
 	    if (newlength > p.length)
 	    {
@@ -524,7 +524,7 @@ body
 		{
 		    newdata = cast(byte *)_gc.malloc(newsize + 1);
 		    newdata[0 .. size] = p.data[0 .. size];
-		    if (!(ti.next.flags() & 1))
+		    if (!(ti.flags() & 1))
 			_gc.hasNoPointers(newdata);
 		}
 		newdata[size .. newsize] = 0;
@@ -532,8 +532,9 @@ body
 	}
 	else
 	{
-	    newdata = cast(byte *)_gc.calloc(newsize + 1, 1);
-	    if (!(ti.next.flags() & 1))
+		//kernel_assert.kernel_assert(1, "gc2.d", "535");
+	    newdata = cast(byte *)_gc.calloc(newsize + 1, 1); // kernel_assert.kernel_assert(1, "gc2.d", "536");
+	    if (!(ti.flags() & 1))
 		_gc.hasNoPointers(newdata);
 	}
     }

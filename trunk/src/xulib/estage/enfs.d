@@ -12,63 +12,69 @@ import doc;
 import trans;
 import util;
 
+private static const int RAM=0;
+private static const int PART=1;
+private static const int DISK=2;
+
 struct Enfs {
 	XuNode!(void[]) ram;
 	XuNode!(MMPart) part;
 	XuNode!(MMDisk) disk;
-	enum MEDIA_TYPE {
-		RAM,
+	enum MEDIA_TYPE:int{
+		RAM=0,
 		PART,
 		DISK,
 	}
-	MEDIA_TYPE type;
+	int type;
 	void init(void[] m) {
-		type=MEDIA_TYPE.RAM;
+		type=RAM;
 		ram.init(m);
 	}
 	void init(MMPart m) {
-		type=MEDIA_TYPE.PART;
+		type=PART;
 		part.init(m);
 	}
 	void init(MMDisk m) {
-		type=MEDIA_TYPE.DISK;
+		type=DISK;
 		disk.init(m);
 	}
 	void format() {
+//		kernel_assert.kernel_assert(1, "enfs.d", "38");
 		switch (type) {
-			RAM:
+			case 0:	
+				//kernel_assert.kernel_assert(1, "enfs.d", "45");
 				ram.fmt();
 				break;
-			PART:
+			case 1:
 				part.fmt();
 				break;
-			DISK:
+			case 2:
 				disk.fmt();
 				break;
 		}
 	}
 	void setup() {
 		switch(type) {
-			RAM:
+			case 0:
 				ram.init();
 				break;
-			PART:
+			case 1:
 				part.init();
 				break;
-			DISK:
+			case 2:
 				disk.init();
 				break;
 		}
 	}
 	XuDoc get(Enfilade e) {
 		switch(type) {
-			RAM:
+			case 0:
 				return ram.get(e);
 				break;
-			PART:
+			case 1:
 				return part.get(e);
 				break;
-			DISK:
+			case 2:
 				return disk.get(e);
 				break;
 		}
@@ -77,13 +83,13 @@ struct Enfs {
 	}
 	XuDoc set(XuDoc doc, Enfilade e) {
 		switch(type) {
-			RAM:
+			case 0:
 				return ram.add(doc, e);
 				break;
-			PART:
+			case 1:
 				return part.add(doc, e);
 				break;
-			DISK:
+			case 2:
 				return disk.add(doc, e);
 				break;
 		}
@@ -91,13 +97,13 @@ struct Enfs {
 	}
 	void rm(Enfilade e) {
 		switch(type) {
-			RAM:
+			case 0:
 				ram.free(e);
 				break;
-			PART:
+			case 1:
 				part.free(e);
 				break;
-			DISK:
+			case 2:
 				disk.free(e);
 				break;
 		}

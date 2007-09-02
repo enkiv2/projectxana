@@ -89,7 +89,7 @@ void do_z2() {
 void init_node() { //kernel_assert.kernel_assert(89, "aileta.d", "init_node called");
 	void[] x; //kernel_assert.kernel_assert(1, "aileta.d", "90");
 	x.length=500;
-	kernel_assert.kernel_assert(92, "aileta.d", "init_node past void[] x");
+//	kernel_assert.kernel_assert(92, "aileta.d", "init_node past void[] x");
 	filesystem.init(x);
 //	kernel_assert.kernel_assert(94, "aileta.d", "init_node past filesystem.init()");
 	filesystem.format();
