@@ -29,7 +29,7 @@ floppy_bootsig_check: disabled=0
 panic: action=ask
 error: action=report
 info: action=report
-debug: action=ignore
+debug: action=report
 #pass: action=fatal
 
 #debugger_log: /dev/null
