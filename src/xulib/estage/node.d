@@ -61,18 +61,19 @@ struct XuNode {
 	void fmt() {/+
 		if (is (T == XuHeap)) {
 			db.malloc(xudb.sizeof);
-		}+/kernel_assert.kernel_assert(1, "node.d", "64");
-		xudb x; kernel_assert.kernel_assert(1, "node.d", "65");
+		}+///kernel_assert.kernel_assert(1, "node.d", "64");
+		xudb x; //kernel_assert.kernel_assert(1, "node.d", "65");
 		db[]=*(cast(void[x.sizeof]*)(cast(void*)&x));
 		init();
 	}
-	void init() {kernel_assert.kernel_assert(1, "node.d", "69");
+	void init() {//kernel_assert.kernel_assert(1, "node.d", "69");
 		uint64_t toclen=cast(uint64_t) db[0];
-		kernel_assert.kernel_assert(1, "node.d", "70");
-		loc=cast(uint64_t[Enfilade][]) db[6 .. toclen];
-		uint64_t start=6+toclen;
+		//kernel_assert.kernel_assert(1, "node.d", "70");
+		loc=cast(uint64_t[Enfilade][]) db[6 .. toclen]; //kernel_assert.kernel_assert(1, "node.d", "72");
+		uint64_t start=6+toclen; //kernel_assert.kernel_assert(1, "node.d", "73");
 //		e0=start;
 		foreach (Enfilade e, uint64_t i; loc[0]) {
+			kernel_assert.kernel_assert(1, "node.d", "76");
 			start+=i;
 			toc[0][e]=start;
 		}
