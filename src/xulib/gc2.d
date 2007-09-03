@@ -234,9 +234,9 @@ void _d_delclass(Object *p)
 extern (C) Array _d_newarrayT(TypeInfo ti, size_t length)
 {
     Array result;
-    auto size = ti.next.tsize();		// array element size
+    auto size = ti.tsize();		// array element size
     
-//    kernel_assert.kernel_assert(238, "gc2.d", "_d_newarrayT");
+    kernel_assert.kernel_assert(238, "gc2.d", "_d_newarrayT");
     
 //    debug(PRINTF) printf("_d_newT(length = %d, size = %d)\n", length, size);
     if (length && size)
@@ -244,7 +244,7 @@ extern (C) Array _d_newarrayT(TypeInfo ti, size_t length)
 	result.length = length;
 	size *= length;
 	result.data = cast(byte*) _gc.malloc(size + 1);
-	if (!(ti.next.flags() & 1))
+	if (!(ti.flags() & 1))
 	    _gc.hasNoPointers(result.data);
 	memset(cast(void*)result.data, cast(ubyte)0, size);
     }
@@ -256,20 +256,22 @@ extern (C) Array _d_newarrayT(TypeInfo ti, size_t length)
 extern (C) Array _d_newarrayiT(TypeInfo ti, size_t length)
 {
     Array result;
-    auto size = ti.next.tsize();		// array element size
+    auto size = ti.tsize();		// array element size
+    
+    kernel_assert.kernel_assert(1, "gc2.d", "261");
 
     //debug(PRINTF) printf("_d_newarrayiT(length = %d, size = %d, isize = %d)\n", length, size, isize);
     if (length == 0 || size == 0)
 	{ }
     else
     {
-	auto initializer = ti.next.init();
+	auto initializer = ti.init();
 	auto isize = initializer.length;
 	auto q = initializer.ptr;
 	size *= length;
 	auto p = _gc.malloc(size + 1);
 	debug(PRINTF) printf(" p = %p\n", p);
-	if (!(ti.next.flags() & 1))
+	if (!(ti.flags() & 1))
 	    _gc.hasNoPointers(p);
 	if (isize == 1)
 	    memset(p, *cast(ubyte*)q, size);
@@ -296,7 +298,7 @@ extern (C) Array _d_newarrayiT(TypeInfo ti, size_t length)
 }
 
 void[] _d_newarraymTp(TypeInfo ti, int ndims, size_t* pdim)
-{
+{   kernel_assert.kernel_assert(1, "gc2.d", "301");
     void[] result = void;
 
     //debug(PRINTF)
@@ -322,7 +324,7 @@ void[] _d_newarraymTp(TypeInfo ti, int ndims, size_t* pdim)
 		p = _gc.malloc(dim * (void[]).sizeof + 1)[0 .. dim];
 		for (int i = 0; i < dim; i++)
 		{
-		    (cast(void[]*)p.ptr)[i] = foo(ti.next, pdim + 1, ndims - 1);
+		    (cast(void[]*)p.ptr)[i] = foo(ti, pdim + 1, ndims - 1);
 		}
 	    }
 	    return p;
@@ -343,7 +345,7 @@ void[] _d_newarraymTp(TypeInfo ti, int ndims, size_t* pdim)
 }
 
 void[] _d_newarraymiTp(TypeInfo ti, int ndims, size_t* pdim)
-{
+{   kernel_assert.kernel_assert(1, "gc2.d", "348");
     void[] result = void;
 
     //debug(PRINTF)
@@ -368,7 +370,7 @@ void[] _d_newarraymiTp(TypeInfo ti, int ndims, size_t* pdim)
 		p = _gc.malloc(dim * (void[]).sizeof + 1)[0 .. dim];
 		for (int i = 0; i < dim; i++)
 		{
-		    (cast(void[]*)p.ptr)[i] = foo(ti.next, pdim + 1, ndims - 1);
+		    (cast(void[]*)p.ptr)[i] = foo(ti, pdim + 1, ndims - 1);
 		}
 	    }
 	    return p;
@@ -512,8 +514,8 @@ body
 //	}
 	//printf("newsize = %x, newlength = %x\n", newsize, newlength);
 //	kernel_assert.kernel_assert(1, "gc2.d", "514");
-	if (p.data)
-	{	kernel_assert.kernel_assert(1, "gc2.d", "516");
+	if (p&&p.data)
+	{//	kernel_assert.kernel_assert(1, "gc2.d", "516");
 	    newdata = p.data;
 	    if (newlength > p.length)
 	    {
@@ -567,8 +569,8 @@ in
 body
 {
     byte* newdata;
-    size_t sizeelem = ti.next.tsize();
-    void[] initializer = ti.next.init();
+    size_t sizeelem = ti.tsize();
+    void[] initializer = ti.init();
     size_t initsize = initializer.length;
 
     assert(sizeelem);
@@ -632,7 +634,7 @@ body
 	else
 	{
 	    newdata = cast(byte *)_gc.malloc(newsize + 1);
-	    if (!(ti.next.flags() & 1))
+	    if (!(ti.flags() & 1))
 		_gc.hasNoPointers(newdata);
 	}
 
@@ -674,7 +676,7 @@ Loverflow:
 
 extern (C) Array _d_arrayappendT(TypeInfo ti, Array *px, byte[] y)
 {
-    auto size = ti.next.tsize();		// array element size
+    auto size = ti.tsize();		// array element size
     size_t cap = _gc.capacity(px.data);
     size_t length = px.length;
     size_t newlength = length + y.length;
@@ -682,7 +684,7 @@ extern (C) Array _d_arrayappendT(TypeInfo ti, Array *px, byte[] y)
     {   byte* newdata;
 
 	newdata = cast(byte *)_gc.malloc(newCapacity(newlength, size) + 1);
-	if (!(ti.next.flags() & 1))
+	if (!(ti.flags() & 1))
 	    _gc.hasNoPointers(newdata);
 	memcpy(newdata, px.data, length * size);
 	px.data = newdata;
@@ -761,7 +763,7 @@ size_t newCapacity(size_t newlength, size_t size)
 
 extern (C) byte[] _d_arrayappendcTp(TypeInfo ti, inout byte[] x, void *argp)
 {
-    auto size = ti.next.tsize();		// array element size
+    auto size = ti.tsize();		// array element size
     size_t cap = _gc.capacity(x.ptr);
     size_t length = x.length;
     size_t newlength = length + 1;
@@ -777,7 +779,7 @@ extern (C) byte[] _d_arrayappendcTp(TypeInfo ti, inout byte[] x, void *argp)
 	cap = newCapacity(newlength, size);
 	assert(cap >= newlength * size);
 	newdata = cast(byte *)_gc.malloc(cap + 1);
-	if (!(ti.next.flags() & 1))
+	if (!(ti.flags() & 1))
 	    _gc.hasNoPointers(newdata);
 	memcpy(newdata, x.ptr, length * size);
 	(cast(void **)(&x))[1] = newdata;
@@ -793,7 +795,7 @@ extern (C) byte[] _d_arrayappendcTp(TypeInfo ti, inout byte[] x, void *argp)
 extern (C) byte[] _d_arraycatT(TypeInfo ti, byte[] x, byte[] y)
 out (result)
 {
-    auto size = ti.next.tsize();		// array element size
+    auto size = ti.tsize();		// array element size
     //printf("_d_arraycatT(%d,%p ~ %d,%p size = %d => %d,%p)\n", x.length, x.ptr, y.length, y.ptr, size, result.length, result.ptr);
     assert(result.length == x.length + y.length);
     for (size_t i = 0; i < x.length * size; i++)
@@ -822,7 +824,7 @@ body
     }
 
     //printf("_d_arraycatT(%d,%p ~ %d,%p)\n", x.length, x.ptr, y.length, y.ptr);
-    auto size = ti.next.tsize();		// array element size
+    auto size = ti.tsize();		// array element size
     //printf("_d_arraycatT(%d,%p ~ %d,%p size = %d)\n", x.length, x.ptr, y.length, y.ptr, size);
     size_t xlen = x.length * size;
     size_t ylen = y.length * size;
@@ -831,7 +833,7 @@ body
 	return null;
 
     byte* p = cast(byte*)_gc.malloc(len + 1);
-    if (!(ti.next.flags() & 1))
+    if (!(ti.flags() & 1))
 	_gc.hasNoPointers(p);
     memcpy(p, x.ptr, xlen);
     memcpy(p + xlen, y.ptr, ylen);
@@ -848,7 +850,7 @@ extern (C) byte[] _d_arraycatnT(TypeInfo ti, uint n, ...)
     uint i;
     byte[] b;
     va_list va;
-    auto size = ti.next.tsize();		// array element size
+    auto size = ti.tsize();		// array element size
 
     va_start!(typeof(n))(va, n);
 
@@ -861,7 +863,7 @@ extern (C) byte[] _d_arraycatnT(TypeInfo ti, uint n, ...)
 	return null;
 
     a = new byte[length * size];
-    if (!(ti.next.flags() & 1))
+    if (!(ti.flags() & 1))
 	_gc.hasNoPointers(a.ptr);
     va_start!(typeof(n))(va, n);
 
@@ -884,7 +886,7 @@ extern (C) byte[] _d_arraycatnT(TypeInfo ti, uint n, ...)
 version (GNU) { } else
 extern (C) void* _d_arrayliteralT(TypeInfo ti, size_t length, ...)
 {
-    auto size = ti.next.tsize();		// array element size
+    auto size = ti.tsize();		// array element size
     byte[] result;
 
     //printf("_d_arrayliteralT(size = %d, length = %d)\n", size, length);
@@ -893,7 +895,7 @@ extern (C) void* _d_arrayliteralT(TypeInfo ti, size_t length, ...)
     else
     {
 	result = new byte[length * size];
-	if (!(ti.next.flags() & 1))
+	if (!(ti.flags() & 1))
 	    _gc.hasNoPointers(result.ptr);
 	*cast(size_t *)&result = length;	// jam length
 
@@ -933,7 +935,7 @@ struct Array2
 extern (C) Array2 _adDupT(TypeInfo ti, Array2 a)
     out (result)
     {
-	auto szelem = ti.next.tsize();		// array element size
+	auto szelem = ti.tsize();		// array element size
 //	assert(memcmp((cast(void*)result), *a.ptr, a.length * szelem) == 0);
     }
     body
@@ -942,10 +944,10 @@ extern (C) Array2 _adDupT(TypeInfo ti, Array2 a)
 
 	if (a.length)
 	{
-	    auto szelem = ti.next.tsize();		// array element size
+	    auto szelem = ti.tsize();		// array element size
 	    auto size = a.length * szelem;
 	    r.ptr = cast(void *) new void[size];
-	    if (!(ti.next.flags() & 1))
+	    if (!(ti.flags() & 1))
 		_gc.hasNoPointers(r.ptr);
 	    r.length = a.length;
 	    memcpy(r.ptr, a.ptr, size);

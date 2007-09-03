@@ -72,7 +72,7 @@ class TypeInfo
     +/
     TypeInfo next;
     uint flags() { return 0; }
-	void[]   init() { void[] x; return x; }
+	void []  init() { return null; }
 	
 	/+
     uint     flags();
