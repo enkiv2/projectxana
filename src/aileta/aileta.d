@@ -93,7 +93,7 @@ void init_node() { //kernel_assert.kernel_assert(89, "aileta.d", "init_node call
 	filesystem.init(x);
 //	kernel_assert.kernel_assert(94, "aileta.d", "init_node past filesystem.init()");
 	filesystem.format();
-	kernel_assert.kernel_assert(96, "aileta.d", "init_node past filesystem_format");
+//	kernel_assert.kernel_assert(96, "aileta.d", "init_node past filesystem_format");
 	filesystem.setup();
 }
 void init() {
