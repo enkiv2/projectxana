@@ -236,7 +236,7 @@ extern (C) Array _d_newarrayT(TypeInfo ti, size_t length)
     Array result;
     auto size = ti.tsize();		// array element size
     
-    kernel_assert.kernel_assert(238, "gc2.d", "_d_newarrayT");
+//    kernel_assert.kernel_assert(238, "gc2.d", "_d_newarrayT");
     
 //    debug(PRINTF) printf("_d_newT(length = %d, size = %d)\n", length, size);
     if (length && size)
@@ -258,7 +258,7 @@ extern (C) Array _d_newarrayiT(TypeInfo ti, size_t length)
     Array result;
     auto size = ti.tsize();		// array element size
     
-    kernel_assert.kernel_assert(1, "gc2.d", "261");
+//    kernel_assert.kernel_assert(1, "gc2.d", "261");
 
     //debug(PRINTF) printf("_d_newarrayiT(length = %d, size = %d, isize = %d)\n", length, size, isize);
     if (length == 0 || size == 0)

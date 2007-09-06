@@ -36,6 +36,8 @@ debug: action=report
 debugger_log: debugger.out
 #debugger_log: ./tmp/debug/debugger.out
 
+#gdbstub: enabled=1, port=1234, text_base=0, data_base=0, bss_base=0
+
 #com1: enabled=1, dev=/dev/ttyp9
 
 parport1: enabled=1, file="parport.txt"
