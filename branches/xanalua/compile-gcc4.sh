@@ -63,7 +63,7 @@ for item in src/klib/gstage/*.d ; do
 done
 echo "Compiling klib (lstage)"
 for item in src/klib/lstage/*.c ; do
-	gcc -mtune=i386 -mno-mmx -mno-3dnow -mno-sse2 -mno-sse3 -mno-sse -mno-tls-direct-seg-refs -c -nostdinc -o obj/klib.${item##src/klib/lstage/}.o -Isrc/klib $item
+	gcc -mtune=i386 -mno-mmx -mno-3dnow -mno-sse2 -mno-sse3 -mno-sse -mno-tls-direct-seg-refs -c -nostdinc -nostdlib -o obj/klib.${item##src/klib/lstage/}.o -Isrc/klib -Isrc/klib/lstage/ $item
 done
 echo "Compiling xulib"
 for item in src/xulib/*.d ; do
