@@ -14,7 +14,7 @@ RANLIB= ranlib
 RM= rm -f
 LIBS= -lm $(MYLIBS)
 
-MYCFLAGS= -I../klib/lstage/ -nostdinc
+MYCFLAGS= -I../klib/lstage/ -nostdlib -nostdinc
 MYLDFLAGS=
 MYLIBS=
 
