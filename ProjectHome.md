@@ -1,0 +1,1 @@
+Project XANA is an experimental R&D OS implementing xanalogical functionalities. It is written primarily in D, with some C and Assembler. It provides an enfilade-based FS for both disk and ram, a ZigZag-like console UI, an executable format similar to ZigZag's cell programming, and other interesting features.
